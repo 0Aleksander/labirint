@@ -534,14 +534,14 @@ var cord = [
     [250, 474],
     [250, 482]
   ];
-  audio = new Audio('lego-walking.mp3');
+  audio = new Audio('pictures/Supercar Engine Revving - Sound Effect for editing.mp3');
   audio.volume=0.15;
   
   
   const brick1 = new Image();
   brick1.src = "pictures/fule.png";
   const brick2 = new Image();
-  brick2.src = "pictures/fule.png";
+  brick2.src = "pictures/fuel2.png";
   const brick3 = new Image();
   brick3.src = "pictures/fule.png";
   const canvas = document.getElementById("canvas");
@@ -555,7 +555,7 @@ var cord = [
   const brickHeight2 = 23;
   const brickWidth3 = 18;
   const brickHeight3 = 18;
-  //slike/lego.png
+  //slike/
   
   function moveImageAlongPath() {
   

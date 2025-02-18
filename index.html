@@ -3,13 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Maze Game</title>
+    <style>
+        body {
+            background-image: url("slike/b&w1.png");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .prvi {
+            text-align: center;
+            height: 150px;
+            padding: 10px;
+        }
+
+        .notranji {
+            position: relative;
+            text-align: center;
+        }
+
+        #oblak {
+            position: relative;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        #napis {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .holder {
+            margin: auto;
+            width: fit-content;
+            background-color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #canvas {
+            position: relative;
+            border: 2px solid black;
+        }
+
+        #canvas2 {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .tretji {
+            height: 100px;
+            padding-top: 20px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        button {
+            height: 78px;
+            width: 150px;
+            margin: auto;
+            color: white;
+            background-image: url("slike/gumb1.png");
+            background-size: cover;
+            border: 3px solid #880808;
+            font-size: 30px;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <canvas id="maze"></canvas>
-    <button onclick="generateMaze()">Generate New Maze</button>
-    <button onclick="animateSolution()">Animate Solution</button>
-    <script src="script.js"></script>
+
+    <div class="prvi">
+        <h1>Maze Game</h1>
+    </div>
+
+    <div class="notranji">
+        <img id="oblak" src="slike/b&w1.png" alt="Background Image">
+        <div id="napis">Navigate Through the Maze!</div>
+    </div>
+
+    <div class="holder">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <canvas id="canvas2" width="500" height="500"></canvas>
+    </div>
+
+    <div class="tretji">
+        <button onclick="restartGame()">Restart</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const canvas2 = document.getElementById("canvas2");
+        const ctx2 = canvas2.getContext("2d");
+
+        const tileSize = 20;
+        const cols = canvas.width / tileSize;
+        const rows = canvas.height / tileSize;
+
+        let player = { x: 0, y: 0 };
+        let exit = { x: cols - 1, y: rows - 1 };
+        let walls = generateMaze(cols, rows);
+
+        function generateMaze(cols, rows) {
+            let maze = new Array(cols * rows).fill(true);
+            // Simple random wall placement
+            for (let i = 0; i < maze.length; i++) {
+                if (Math.random() > 0.7) maze[i] = false;
+            }
+            maze[0] = true;
+            maze[maze.length - 1] = true;
+            return maze;
+        }
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (!walls[y * cols + x]) {
+                        ctx.fillStyle = "black";
+                        ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                }
+            }
+        }
+
+        function drawPlayer() {
+            ctx2.clearRect(0, 0, canvas.width, canvas.height);
+            ctx2.fillStyle = "red";
+            ctx2.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+        }
+
+        function movePlayer(dx, dy) {
+            let newX = player.x + dx;
+            let newY = player.y + dy;
+            if (newX >= 0 && newX < cols && newY >= 0 && newY < rows && walls[newY * cols + newX]) {
+                player.x = newX;
+                player.y = newY;
+                drawPlayer();
+                checkWin();
+            }
+        }
+
+        function checkWin() {
+            if (player.x === exit.x && player.y === exit.y) {
+                alert("Congratulations! You won!");
+                restartGame();
+            }
+        }
+
+        function restartGame() {
+            player = { x: 0, y: 0 };
+            walls = generateMaze(cols, rows);
+            drawMaze();
+            drawPlayer();
+        }
+
+        document.addEventListener("keydown", function(event) {
+            switch (event.key) {
+                case "ArrowUp":
+                    movePlayer(0, -1);
+                    break;
+                case "ArrowDown":
+                    movePlayer(0, 1);
+                    break;
+                case "ArrowLeft":
+                    movePlayer(-1, 0);
+                    break;
+                case "ArrowRight":
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        drawMaze();
+        drawPlayer();
+    </script>
+
 </body>
 </html>

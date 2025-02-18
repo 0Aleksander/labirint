@@ -1,0 +1,62 @@
+body{
+    background-image: url("https://via.placeholder.com/800x600");
+}
+
+.prvi{
+    text-align: center;
+    height: 150px;
+    padding: 10px;
+}
+
+.notranji{
+    position: relative;
+}
+
+#oblak{
+    position: relative;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+#napis{
+    position: absolute;
+    top: 50%; /* Adjust according to your layout */
+    left: 50%; /* Adjust according to your layout */
+    transform: translate(-50%, -50%); /* Center the text */
+    z-index: 2; 
+}
+
+.holder{
+    margin: auto;
+    width: fit-content;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+}
+
+#canvas{
+    position: relative;
+}
+
+#canvas2{
+    position: absolute;
+    left: 0;
+    top: 0;
+} 
+
+.tretji{
+    height: 100px;
+    padding-top: 20px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+button{
+    height: 78px;
+    width: 150px;
+    margin: auto;
+    color: white;
+    background-image: url("https://via.placeholder.com/150x78");
+    opacity: 0.9;
+    border: 3px solid #880808;
+    font-size: 40px;
+}

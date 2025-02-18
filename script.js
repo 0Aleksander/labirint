@@ -539,11 +539,11 @@ var cord = [
   
   
   const brick1 = new Image();
-  brick1.src = "slike/brick1.png";
+  brick1.src = "pictures/fule.png";
   const brick2 = new Image();
-  brick2.src = "slike/brick2.png";
+  brick2.src = "pictures/fule.png";
   const brick3 = new Image();
-  brick3.src = "slike/brick3.png";
+  brick3.src = "pictures/fule.png";
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
   const ch = document.getElementById("canvas2");
@@ -562,7 +562,7 @@ var cord = [
     document.getElementById("play").setAttribute("disabled",true);
     
     const image = new Image();
-    image.src = "slike/lego.png"; // Replace with the path to your image
+    image.src = "pictures/car-removebg.png"; // Replace with the path to your image
   
     const startPosition = path[0];
     const endPosition = path[path.length - 1];

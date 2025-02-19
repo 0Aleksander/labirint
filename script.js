@@ -553,8 +553,8 @@ var cord = [
   const brickHeight1 = 35;
   const brickWidth2 = 23;
   const brickHeight2 = 23;
-  const brickWidth3 = 18;
-  const brickHeight3 = 18;
+  const brickWidth3 = 23;
+  const brickHeight3 = 23;
   //slike/
   
   function moveImageAlongPath() {

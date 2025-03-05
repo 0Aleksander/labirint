@@ -537,6 +537,15 @@ var cord = [
   audio = new Audio('pictures/Supercar Engine Revving - Sound Effect for editing.mp3');
   audio.volume=0.15;
   
+  document.getElementById("info").addEventListener("click", function() {
+    Swal.fire({
+        title: 'Informacija',
+        text: 'Nalogo ustvaril Aleksander Laketa 4.Ra. Za prikaz poti pritisnite na play gumb ',
+        icon: 'info',
+        confirmButtonText: 'Got it!',
+    });
+});
+
   
   const brick1 = new Image();
   brick1.src = "pictures/fule.png";

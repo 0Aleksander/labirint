@@ -537,12 +537,15 @@ var cord = [
   audio = new Audio('pictures/Supercar Engine Revving - Sound Effect for editing.mp3');
   audio.volume=0.15;
   
-  document.getElementById("info").addEventListener("click", function() {
+  document.getElementById("info").addEventListener("click", function() { 
     Swal.fire({
         title: 'Informacija',
         text: 'Nalogo ustvaril Aleksander Laketa 4.Ra. Za prikaz poti pritisnite na play gumb ',
         icon: 'info',
         confirmButtonText: 'Got it!',
+        customClass: {
+            confirmButton: 'custom-confirm-button'
+        }
     });
 });
 
@@ -558,8 +561,8 @@ var cord = [
   const ch = document.getElementById("canvas2");
   const ctx2 = ch.getContext("2d");
   
-  const brickWidth1 = 30;
-  const brickHeight1 = 25;
+  const brickWidth1 = 23;
+  const brickHeight1 = 23;
   const brickWidth2 = 23;
   const brickHeight2 = 23;
   const brickWidth3 = 23;
@@ -637,12 +640,12 @@ var cord = [
      brick1.onload = function() {
       ctx2.drawImage(brick1,70,125, brickWidth1, brickHeight1); // tretji levo
       ctx2.drawImage(brick1,185,95, brickWidth1, brickHeight1); // drugi od zvrha
-          ctx2.drawImage(brick1,76,395, brickWidth1, brickHeight1); //
-          ctx2.drawImage(brick2,100,462, brickWidth2, brickHeight2);
-          ctx2.drawImage(brick2,195,0, brickWidth2, brickHeight2);
-          ctx2.drawImage(brick3,150,145, brickWidth3, brickHeight3);
-          ctx2.drawImage(brick3,260,449, brickWidth3, brickHeight3);
-      ctx2.drawImage(brick3,80,257, brickWidth3, brickHeight3);
+          ctx2.drawImage(brick1,40,379, brickWidth1, brickHeight1); // drugi levi od spodi gor
+          ctx2.drawImage(brick2,115,432, brickWidth2, brickHeight2); // prou odspodi levi
+          ctx2.drawImage(brick2,178,15, brickWidth2, brickHeight2); // prvi od zogri
+          ctx2.drawImage(brick3,171,145, brickWidth3, brickHeight3); // tri povrsti dol
+          ctx2.drawImage(brick3,281,449, brickWidth3, brickHeight3); // zadni
+      ctx2.drawImage(brick3,139,287, brickWidth3, brickHeight3); // tretji levi od zgori dol
       };
     for (i = 0; i < cord.length; i++) {
       console.log("maze2");

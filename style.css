@@ -60,3 +60,9 @@ button{
     border: 3px solid #880808;
     font-size: 40px;
 }
+
+.custom-confirm-button {
+    background-color: red !important;
+    border-color: red !important;
+    color: white !important; /* Ensures text is visible */
+}

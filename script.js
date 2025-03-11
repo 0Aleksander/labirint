@@ -662,10 +662,5 @@ var cord = [
   //draw solution
   function drawSolution() {
     document.getElementById("play").setAttribute("disabled", true);
-    
-  
-  
     document.getElementById("play").removeAttribute("disabled");
-  
-  
   }

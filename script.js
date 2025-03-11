@@ -550,7 +550,7 @@ var cord = [
   const brick1 = new Image();
   brick1.src = "pictures/fule.png";
   const brick2 = new Image();
-  brick2.src = "pictures/fuel2.png";
+  brick2.src = "pictures/fule.png";
   const brick3 = new Image();
   brick3.src = "pictures/fule.png";
   const canvas = document.getElementById("canvas");
@@ -558,8 +558,8 @@ var cord = [
   const ch = document.getElementById("canvas2");
   const ctx2 = ch.getContext("2d");
   
-  const brickWidth1 = 45;
-  const brickHeight1 = 35;
+  const brickWidth1 = 30;
+  const brickHeight1 = 25;
   const brickWidth2 = 23;
   const brickHeight2 = 23;
   const brickWidth3 = 23;
@@ -635,9 +635,9 @@ var cord = [
     ch.height = 484 * scale;
     ctx2.scale(scale, scale);
      brick1.onload = function() {
-      ctx2.drawImage(brick1,50,119, brickWidth1, brickHeight1);
-      ctx2.drawImage(brick1,164,87, brickWidth1, brickHeight1);
-          ctx2.drawImage(brick1,37,391, brickWidth1, brickHeight1);
+      ctx2.drawImage(brick1,70,125, brickWidth1, brickHeight1); // tretji levo
+      ctx2.drawImage(brick1,185,95, brickWidth1, brickHeight1); // drugi od zvrha
+          ctx2.drawImage(brick1,76,395, brickWidth1, brickHeight1); //
           ctx2.drawImage(brick2,100,462, brickWidth2, brickHeight2);
           ctx2.drawImage(brick2,195,0, brickWidth2, brickHeight2);
           ctx2.drawImage(brick3,150,145, brickWidth3, brickHeight3);

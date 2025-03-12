@@ -534,133 +534,163 @@ var cord = [
     [250, 474],
     [250, 482]
   ];
-  audio = new Audio('pictures/Supercar Engine Revving - Sound Effect for editing.mp3');
-  audio.volume=0.15;
-  
-  document.getElementById("info").addEventListener("click", function() { 
-    Swal.fire({
-        title: 'Informacija',
-        text: 'Nalogo ustvaril Aleksander Laketa 4.Ra. Za prikaz poti pritisnite na play gumb ',
-        icon: 'info',
-        confirmButtonText: 'Got it!',
-        customClass: {
-            confirmButton: 'custom-confirm-button'
-        }
-    });
+ // Initialize audio
+const audio = new Audio('pictures/Supercar Engine Revving - Sound Effect for editing.mp3');
+audio.volume = 0.15;
+const sound = new Audio('pictures/coin.mp3');
+sound.volume = 0.5;
+
+// Show information dialog
+document.getElementById("info").addEventListener("click", function() { 
+  Swal.fire({
+    title: 'Informacija',
+    text: 'Nalogo ustvaril Aleksander Laketa 4.Ra. Za prikaz poti pritisnite na play gumb ',
+    icon: 'info',
+    confirmButtonText: 'Got it!',
+    customClass: {
+      confirmButton: 'custom-confirm-button'
+    }
+  });
 });
 
-  
-  const brick1 = new Image();
-  brick1.src = "pictures/fule.png";
-  const brick2 = new Image();
-  brick2.src = "pictures/fule.png";
-  const brick3 = new Image();
-  brick3.src = "pictures/fule.png";
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
-  const ch = document.getElementById("canvas2");
-  const ctx2 = ch.getContext("2d");
-  
-  const brickWidth1 = 23;
-  const brickHeight1 = 23;
-  const brickWidth2 = 23;
-  const brickHeight2 = 23;
-  const brickWidth3 = 23;
-  const brickHeight3 = 23;
-  //slike/
-  
-  function moveImageAlongPath() {
-  
-    document.getElementById("play").setAttribute("disabled",true);
-    
-    const image = new Image();
-    image.src = "pictures/car-removebg.png"; // Replace with the path to your image
-  
-    const startPosition = path[0];
-    const endPosition = path[path.length - 1];
-  
-    const imgWidth = 30; // Adjust the width of your image
-    const imgHeight = 30; // Adjust the height of your image
-  
-    let currentStep = 0;//1
-    var stepx = 0;// 15 
-    var stepy = 0;// 0
-    var pstepx = 0;//15
-    var pstepy = 0;//0
-    var dstepx = 0;//0
-    var dstepy = 0;//0
-    var x=0;
-    var y=0;
-    function animate() {
-      if (currentStep < path.length - 1) {
-        dstepx = Math.min(Math.abs(dstepx)+1, Math.abs(stepx))*Math.sign(stepx); /* premika v levo in desno*/
-        dstepy = Math.min(Math.abs(dstepy)+1, Math.abs(stepy))*Math.sign(stepy);/* premika gor in dol */
-        if(stepx==dstepx&&stepy==dstepy) { /* preveri, da je pršlo do naslednje točke */
-          dstepx=0;
-          dstepy=0;
-  
-          pstepx = path[currentStep][0]/16; /* shrani trenutno točko */
-          pstepy = path[currentStep][1]/16;
-  
-          currentStep++; /* se premakne v naslednjo tocko */
-  
-          stepx = path[currentStep][0] / 16 - pstepx; /* shraniu točko, do katere bo interpoliralo */
-          stepy = path[currentStep][1] / 16 - pstepy;
-        } 
-        ctx2.clearRect(x, y, imgWidth, imgHeight);
-        audio.play();
-        x = (dstepx+pstepx)*16 - imgWidth / 2; /* zračune na katerih koordinatah bo narisalo sliko */
-        y = (dstepy+pstepy)*16 - imgHeight / 2;
-        /*  ctx2.clearRect(0, 0, ctx2.canvas.width, ctx2.canvas.height);*/
-        ctx2.drawImage(image, x, y, imgWidth, imgHeight);
-       
-  
-        console.log(x+" "+y);
-  
-        setTimeout(() => {
-          requestAnimationFrame(animate);
-        }, 200);
+// Initialize garage image
+const garage = new Image();
+garage.src = "pictures/finish.png";
+
+// Define garage width and height (adjust if needed)
+let garageWidth = 15;  // Adjust size of the garage
+let garageHeight = 15; // Adjust size of the garage
+
+// Ensure the garage image is loaded before drawing
+garage.onload = function() {
+  console.log("Garage image loaded!");
+  drawGarage();  // Now we can safely draw the garage image
+}
+
+// Draw the garage image onto the canvas at the desired position
+function drawGarage() {
+  const ctx2 = document.getElementById("canvas2").getContext("2d");
+  ctx2.drawImage(garage, 245, 470, garageWidth, garageHeight); // Change position as needed
+}
+
+// Initialize maze and car
+const brick1 = new Image();
+brick1.src = "pictures/fule.png";
+const brick2 = new Image();
+brick2.src = "pictures/fule.png";
+const brick3 = new Image();
+brick3.src = "pictures/fule.png";
+
+// Initialize canvas
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const ch = document.getElementById("canvas2");
+const ctx2 = ch.getContext("2d");
+
+const brickWidth1 = 23;
+const brickHeight1 = 23;
+const brickWidth2 = 23;
+const brickHeight2 = 23;
+const brickWidth3 = 23;
+const brickHeight3 = 23;
+
+// Draw maze and garage
+function drawMaze() {
+  console.log("maze " + cord.length);
+  ctx.beginPath();
+  const scale = 1.5;
+  canvas.width = 484 * scale;
+  canvas.height = 484 * scale;
+  ctx.scale(scale, scale);
+  ch.width = 484 * scale;
+  ch.height = 484 * scale;
+  ctx2.scale(scale, scale);
+
+  brick1.onload = function() {
+    ctx2.drawImage(brick1, 70, 125, brickWidth1, brickHeight1); // tretji levo
+    ctx2.drawImage(brick1, 185, 95, brickWidth1, brickHeight1); // drugi od zvrha
+    ctx2.drawImage(brick1, 40, 379, brickWidth1, brickHeight1); // drugi levi od spodi gor
+    ctx2.drawImage(brick2, 115, 432, brickWidth2, brickHeight2); // prou odspodi levi
+    ctx2.drawImage(brick2, 178, 15, brickWidth2, brickHeight2); // prvi od zogri
+    ctx2.drawImage(brick3, 171, 145, brickWidth3, brickHeight3); // tri povrsti dol
+    ctx2.drawImage(brick3, 281, 449, brickWidth3, brickHeight3); // zadni
+    ctx2.drawImage(brick3, 139, 287, brickWidth3, brickHeight3); // tretji levi od zgori dol
+  };
+
+  for (i = 0; i < cord.length; i++) {
+    console.log("maze2");
+    ctx.moveTo(cord[i][0], cord[i][1]);
+    ctx.lineTo(cord[i][2], cord[i][3]);
+  }
+
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  console.log("maze3 " + cord.length);
+
+  // Call the drawGarage function after the maze is drawn
+  drawGarage();  // Ensure it's called after the maze is drawn
+}
+
+// Car movement along the path
+function moveImageAlongPath() {
+  document.getElementById("play").setAttribute("disabled", true);
+  const image = new Image();
+  image.src = "pictures/car-removebg.png"; // Replace with the path to your image
+
+  const startPosition = path[0];
+  const endPosition = path[path.length - 1];
+
+  const imgWidth = 25; // Adjust the width of your image
+  const imgHeight = 25; // Adjust the height of your image
+
+  let currentStep = 0; // 1
+  let stepx = 0; // 15
+  let stepy = 0; // 0
+  let pstepx = 0; // 15
+  let pstepy = 0; // 0
+  let dstepx = 0; // 0
+  let dstepy = 0; // 0
+  let x = 0;
+  let y = 0;
+
+  function animate() {
+    if (currentStep < path.length - 1) {
+      dstepx = Math.min(Math.abs(dstepx) + 1, Math.abs(stepx)) * Math.sign(stepx); // Move left and right
+      dstepy = Math.min(Math.abs(dstepy) + 1, Math.abs(stepy)) * Math.sign(stepy); // Move up and down
+
+      if (stepx == dstepx && stepy == dstepy) { // Check if it has reached the next point
+        dstepx = 0;
+        dstepy = 0;
+        sound.play();
+
+        pstepx = path[currentStep][0] / 16; // Save the current point
+        pstepy = path[currentStep][1] / 16;
+
+        currentStep++; // Move to the next point
+
+        stepx = path[currentStep][0] / 16 - pstepx; // Store the point for interpolation
+        stepy = path[currentStep][1] / 16 - pstepy;
       }
+
+      ctx2.clearRect(x, y, imgWidth, imgHeight);
+      audio.play();
+      x = (dstepx + pstepx) * 16 - imgWidth / 2; // Calculate the position to draw the image
+      y = (dstepy + pstepy) * 16 - imgHeight / 2;
+      ctx2.drawImage(image, x, y, imgWidth, imgHeight);
+
+      console.log(x + " " + y);
+
+      setTimeout(() => {
+        requestAnimationFrame(animate);
+      }, 200);
+    } else {
+      // The car has reached the end of the path, refresh the page
+      location.reload(); // Refresh the page
     }
-  
-    animate();
   }
-  
-  function drawMaze() {
-  
-    console.log("maze " + cord.length);
-    ctx.beginPath();
-    scale = 1.5;
-    canvas.width = 484 * scale;
-    canvas.height = 484 * scale;
-    ctx.scale(scale, scale);
-    ch.width = 484 * scale;
-    ch.height = 484 * scale;
-    ctx2.scale(scale, scale);
-     brick1.onload = function() {
-      ctx2.drawImage(brick1,70,125, brickWidth1, brickHeight1); // tretji levo
-      ctx2.drawImage(brick1,185,95, brickWidth1, brickHeight1); // drugi od zvrha
-          ctx2.drawImage(brick1,40,379, brickWidth1, brickHeight1); // drugi levi od spodi gor
-          ctx2.drawImage(brick2,115,432, brickWidth2, brickHeight2); // prou odspodi levi
-          ctx2.drawImage(brick2,178,15, brickWidth2, brickHeight2); // prvi od zogri
-          ctx2.drawImage(brick3,171,145, brickWidth3, brickHeight3); // tri povrsti dol
-          ctx2.drawImage(brick3,281,449, brickWidth3, brickHeight3); // zadni
-      ctx2.drawImage(brick3,139,287, brickWidth3, brickHeight3); // tretji levi od zgori dol
-      };
-    for (i = 0; i < cord.length; i++) {
-      console.log("maze2");
-      ctx.moveTo(cord[i][0], cord[i][1]);
-      ctx.lineTo(cord[i][2], cord[i][3]);
-    }
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    console.log("maze3 " + cord.length);
-  }
-  
-  drawMaze();
-  
-  //draw solution
-  function drawSolution() {
-    document.getElementById("play").setAttribute("disabled", true);
-    document.getElementById("play").removeAttribute("disabled");
-  }
+
+  animate();
+}
+
+// Draw the maze and the garage
+drawMaze();
